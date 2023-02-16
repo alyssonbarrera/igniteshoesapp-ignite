@@ -6,6 +6,19 @@ import { AppRoutes } from './app.routes';
 import OneSignal, { NotificationReceivedEvent, OSNotification } from 'react-native-onesignal';
 import { Notification } from '../components/Notification';
 
+const linking = {
+  prefixes: ['igniteshoesapp://', 'com.rocketseat.igniteshoes://', 'exp+igniteshoesapp://'],
+  config: {
+    screens: {
+      details: {
+        path: 'details/:productId',
+        parse: {
+          productId: (productId: string) => productId
+        }
+      }
+    }
+  }
+}
 
 export function Routes() {
   const [notification, setNotification] = useState<OSNotification>({} as OSNotification);
@@ -25,7 +38,7 @@ export function Routes() {
   }, []);
 
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer theme={theme} linking={linking}>
       <AppRoutes />
       {
         notification.title &&
